@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0F0F11;
+  --bg-secondary: #17171A;
+  --bg-tertiary: #222227;
+  --bg-paper: #F7F4EE;
+  
+  --text-primary: #F4F1EA;
+  --text-secondary: #A3A3A8;
+  --text-tertiary: #71717A;
+  --text-inverse: #111113;
+
+  --accent-terracotta: #C84B31;
+  --accent-ochre: #E09F3E;
+  --accent-indigo: #1B2A4A;
+  --accent-bronze: #8C3B23;
+
+  --font-display: 'Syne', system-ui, -apple-system, sans-serif;
+  --font-editorial: 'Newsreader', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #0F0F11;
+  color: #F4F1EA;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Archival Focus Visible Outline */
+:focus-visible {
+  outline: 2px solid #E09F3E !important;
+  outline-offset: 3px !important;
+}
+
+/* Subtle Film Grain Noise Texture Overlay */
+.archival-grain {
+  background-image: radial-gradient(rgba(244, 241, 234, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Darkroom Contact Sheet Perforations */
+.contact-sheet-border {
+  border-top: 1px dashed rgba(244, 241, 234, 0.2);
+  border-bottom: 1px dashed rgba(244, 241, 234, 0.2);
+}
+
+/* Custom Scrollbar for Catalog Browsing */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F0F11;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C84B31;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
