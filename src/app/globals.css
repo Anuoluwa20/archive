@@ -5,20 +5,20 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #0F0F11;
-  --bg-secondary: #17171A;
-  --bg-tertiary: #222227;
-  --bg-paper: #F7F4EE;
+  --bg-primary: #08080A;
+  --bg-secondary: #0D0D10;
+  --bg-tertiary: #1A1A20;
+  --bg-paper: #F8F5EE;
   
   --text-primary: #F4F1EA;
-  --text-secondary: #A3A3A8;
-  --text-tertiary: #71717A;
-  --text-inverse: #111113;
+  --text-secondary: #9C9CA8;
+  --text-tertiary: #6B6B78;
+  --text-inverse: #0D0D10;
 
-  --accent-terracotta: #C84B31;
+  --accent-terracotta: #D9532F;
+  --accent-bronze: #D4AF37;
   --accent-ochre: #E09F3E;
   --accent-indigo: #1B2A4A;
-  --accent-bronze: #8C3B23;
 
   --font-display: 'Syne', system-ui, -apple-system, sans-serif;
   --font-editorial: 'Newsreader', Georgia, serif;
@@ -28,7 +28,7 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #0F0F11;
+  background-color: #08080A;
   color: #F4F1EA;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -43,39 +43,62 @@ body {
 
 /* Custom Archival Focus Visible Outline */
 :focus-visible {
-  outline: 2px solid #E09F3E !important;
+  outline: 2px solid #D4AF37 !important;
   outline-offset: 3px !important;
 }
 
 /* Subtle Film Grain Noise Texture Overlay */
 .archival-grain {
-  background-image: radial-gradient(rgba(244, 241, 234, 0.04) 1px, transparent 0);
+  background-image: radial-gradient(rgba(244, 241, 234, 0.045) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
-/* Darkroom Contact Sheet Perforations */
-.contact-sheet-border {
-  border-top: 1px dashed rgba(244, 241, 234, 0.2);
-  border-bottom: 1px dashed rgba(244, 241, 234, 0.2);
+/* Printer Registration Crosshair Target (+) */
+.registration-crosshair {
+  position: relative;
+}
+.registration-crosshair::before {
+  content: "+";
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(212, 175, 55, 0.45);
+  pointer-events: none;
+}
+
+/* Glassmorphism Sheen */
+.glass-panel {
+  background: rgba(13, 13, 16, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-elevated {
+  background: rgba(19, 19, 23, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
 }
 
 /* Custom Scrollbar for Catalog Browsing */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0F0F11;
+  background: #08080A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272E;
-  border-radius: 4px;
+  background: #26262F;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C84B31;
+  background: #D9532F;
 }
 
 /* Reduced Motion Safety */

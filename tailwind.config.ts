@@ -10,25 +10,32 @@ const config: Config = {
     extend: {
       colors: {
         archival: {
-          950: "#09090B",
-          900: "#0F0F11",
-          850: "#141417",
-          800: "#1A1A1E",
-          700: "#27272E",
-          600: "#3F3F46",
-          500: "#71717A",
-          400: "#A1A1AA",
-          300: "#D4D4D8",
-          200: "#E4E4E7",
+          950: "#08080A",
+          900: "#0D0D10",
+          850: "#131317",
+          800: "#1A1A20",
+          700: "#26262F",
+          600: "#3D3D48",
+          500: "#6B6B78",
+          400: "#9C9CA8",
+          300: "#CBCBD4",
+          200: "#E4E4EB",
           100: "#F4F1EA",
-          50: "#FAF7F2",
-          paper: "#F7F4EE",
+          50: "#FAF8F4",
+          paper: "#F8F5EE",
         },
         terracotta: {
-          DEFAULT: "#C84B31",
-          dark: "#9E3D22",
-          light: "#E0583B",
-          glow: "rgba(200, 75, 49, 0.25)",
+          DEFAULT: "#BC3A18",
+          dark: "#8F270D",
+          light: "#D9532F",
+          glow: "rgba(217, 83, 47, 0.28)",
+        },
+        bronze: {
+          DEFAULT: "#C5A059",
+          metallic: "#D4AF37",
+          dark: "#8C6A28",
+          light: "#E5C378",
+          glow: "rgba(212, 175, 55, 0.25)",
         },
         ochre: {
           DEFAULT: "#E09F3E",
@@ -37,11 +44,9 @@ const config: Config = {
         },
         adire: {
           DEFAULT: "#1B2A4A",
-          light: "#2E477D",
-        },
-        bronze: {
-          DEFAULT: "#8C3B23",
-          light: "#B2533E",
+          deep: "#111B30",
+          light: "#2B3E60",
+          sky: "#5A82B8",
         },
       },
       fontFamily: {
@@ -54,25 +59,26 @@ const config: Config = {
         tighter: "-0.04em",
         tight: "-0.02em",
         monumental: "-0.05em",
-        archival: "0.12em",
+        archival: "0.14em",
       },
-      maxWidth: {
-        reading: "68ch",
-        "8xl": "88rem",
-        "9xl": "96rem",
+      boxShadow: {
+        glowTerracotta: "0 0 35px -5px rgba(217, 83, 47, 0.3)",
+        glowBronze: "0 0 35px -5px rgba(212, 175, 55, 0.25)",
+        cardArchival: "0 10px 30px -10px rgba(0, 0, 0, 0.7)",
       },
       keyframes: {
         pulseSubtle: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.4" },
         },
-        shimmer: {
-          "100%": { transform: "translateX(100%)" },
+        glowBreathe: {
+          "0%, 100%": { opacity: "0.6", transform: "scale(1)" },
+          "50%": { opacity: "0.9", transform: "scale(1.05)" },
         },
       },
       animation: {
         pulseSubtle: "pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        shimmer: "shimmer 2s infinite",
+        glowBreathe: "glowBreathe 6s ease-in-out infinite",
       },
     },
   },

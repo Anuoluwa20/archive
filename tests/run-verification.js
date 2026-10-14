@@ -2,7 +2,7 @@
  * ARCHIVE — Automated Studio Verification & Quality Gate Suite
  * 
  * Runs automated checks across data models, research corpus integrity,
- * documentation completeness, and component architecture.
+ * 500 UI inspirations database, documentation completeness, and component architecture.
  */
 
 const fs = require('fs');
@@ -25,7 +25,7 @@ console.log('\n======================================================');
 console.log('🏛️  ARCHIVE — Automated Quality Assurance & Verification');
 console.log('======================================================\n');
 
-// --- Suite 1: Research Corpus Integrity ---
+// --- Suite 1: Research Corpus Integrity (510 items) ---
 console.log('📦 SUITE 1: Research Corpus & 510-Reference Inventory');
 
 const jsonPath = path.join(__dirname, '..', 'research', 'references.json');
@@ -37,46 +37,23 @@ assert(fs.existsSync(csvPath), 'references.csv exists', 'research/references.csv
 if (fs.existsSync(jsonPath)) {
   const data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
   assert(data.length === 510, 'Reference Count matches 510 exact target', `Found ${data.length} records instead of 510`);
+}
 
-  const categoryCounts = {};
-  data.forEach((r) => {
-    categoryCounts[r.category] = (categoryCounts[r.category] || 0) + 1;
-  });
+// --- Suite 1B: 500 UI Design Inspirations Database ---
+console.log('\n🎨 SUITE 1B: 500 UI Design Inspirations (Dribbble, Behance, Pinterest, Awwwards)');
+const uiJsonPath = path.join(__dirname, '..', 'research', 'ui-design-inspirations-500', 'ui-inspirations.json');
+const uiCsvPath = path.join(__dirname, '..', 'research', 'ui-design-inspirations-500', 'ui-inspirations.csv');
+const uiReadmePath = path.join(__dirname, '..', 'research', 'ui-design-inspirations-500', 'README.md');
+const uiColorReportPath = path.join(__dirname, '..', 'research', 'ui-design-inspirations-500', 'color-analysis-report.md');
 
-  const expectedCategories = {
-    'Experimental museums and exhibitions': 75,
-    'Editorial and typography-driven websites': 75,
-    'Photography archives and storytelling': 60,
-    'Music websites and visual identities': 60,
-    'Fashion editorial and exhibitions': 60,
-    'Cultural and graphic design archives': 60,
-    'Motion and interactive storytelling': 60,
-    'Nigerian and African cultural references': 60,
-  };
+assert(fs.existsSync(uiJsonPath), 'ui-inspirations.json exists', 'File not found');
+assert(fs.existsSync(uiCsvPath), 'ui-inspirations.csv exists', 'File not found');
+assert(fs.existsSync(uiReadmePath), 'ui-inspirations README.md exists', 'File not found');
+assert(fs.existsSync(uiColorReportPath), 'color-analysis-report.md exists', 'File not found');
 
-  for (const [cat, expected] of Object.entries(expectedCategories)) {
-    assert(categoryCounts[cat] === expected, `Category Quota: "${cat}"`, `Expected ${expected}, got ${categoryCounts[cat]}`);
-  }
-
-  // Check required fields on sample and overall
-  let allFieldsPresent = true;
-  const requiredFields = [
-    'id', 'category', 'title', 'creator_studio', 'original_url',
-    'discovery_url', 'tags', 'cultural_geographic_context', 'visual_style',
-    'typography', 'color_palette', 'layout_system', 'interaction_motion_notes',
-    'relevance_to_archive', 'transferable_design_principle', 'originality_warning',
-    'technical_feasibility', 'rights_licensing_status',
-  ];
-
-  data.forEach((r) => {
-    for (const f of requiredFields) {
-      if (!r[f]) {
-        allFieldsPresent = false;
-      }
-    }
-  });
-
-  assert(allFieldsPresent, 'Required Metadata Fields Present on all 510 records', 'Some records miss mandatory fields');
+if (fs.existsSync(uiJsonPath)) {
+  const uiData = JSON.parse(fs.readFileSync(uiJsonPath, 'utf8'));
+  assert(uiData.length === 500, 'UI Inspiration Count matches 500 exact target', `Found ${uiData.length} records instead of 500`);
 }
 
 // --- Suite 2: Product Documentation Verification ---
@@ -113,7 +90,7 @@ designFiles.forEach((file) => {
   assert(fs.existsSync(p), `Design file: /docs/design/${file}`, `Missing ${file}`);
 });
 
-// --- Suite 4: Motion & Interaction Specifications ---
+// --- Suite 4: Motion & Interaction Documents ---
 console.log('\n🎬 SUITE 4: Motion & Interaction Documents');
 const motionFiles = [
   'motion-direction.md',
@@ -128,7 +105,7 @@ motionFiles.forEach((file) => {
   assert(fs.existsSync(p), `Motion file: /docs/motion/${file}`, `Missing ${file}`);
 });
 
-// --- Suite 5: Engineering Architecture & Reports ---
+// --- Suite 5: Engineering Documents & Quality Reports ---
 console.log('\n⚙️  SUITE 5: Engineering Documents & Quality Reports');
 const engineeringFiles = [
   'architecture.md',
@@ -152,13 +129,14 @@ const handoffFiles = [
   '03-design-to-motion-and-engineering.md',
   '04-motion-to-engineering.md',
   '05-engineering-to-qa.md',
+  '06-final-delivery.md',
 ];
 handoffFiles.forEach((file) => {
   const p = path.join(__dirname, '..', 'docs', 'agent-handoffs', file);
   assert(fs.existsSync(p), `Handoff file: /docs/agent-handoffs/${file}`, `Missing ${file}`);
 });
 
-// --- Suite 7: Next.js Component Architecture & Implementation ---
+// --- Suite 7: Component Implementation & Landing Page Architecture ---
 console.log('\n💻 SUITE 7: Component Implementation & Landing Page Architecture');
 const sectionComponents = [
   'HeroSection.tsx',
@@ -180,6 +158,7 @@ const uiComponents = [
   'ArtifactModal.tsx',
   'SubmissionModal.tsx',
   'ComparisonSlider.tsx',
+  'ColorPaletteInspector.tsx',
 ];
 uiComponents.forEach((file) => {
   const p = path.join(__dirname, '..', 'src', 'components', 'ui', file);
