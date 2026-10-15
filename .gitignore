@@ -1,0 +1,11 @@
+# Scraped third-party assets.
+# These are downloaded copies of other people's CSS/JS/HTML (including minified
+# bundles from loc.gov, moma.org and nationalgallery.org.uk). They are not ours
+# to redistribute, they are not needed to read any finding, and every one of them
+# is regenerable by the scripts next to them:
+#   artifacts/03-interactions/_evidence/{harvest,fetch-assets,extract}.ps1
+# The written evidence — findings.md, signatures.md, nav-a11y.md,
+# CAPTURE_CHECKLIST.md, capture-urls.txt — is tracked and stays in the repo.
+artifacts/03-interactions/_evidence/assets/
+artifacts/03-interactions/_evidence/pages/
+artifacts/03-interactions/_evidence/demos/
