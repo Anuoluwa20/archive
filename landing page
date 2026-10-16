@@ -1,444 +1,77 @@
-From 5da0da7accdd9f0762570b211f603d99db7378e1 Mon Sep 17 00:00:00 2001
-From: Claude <noreply@anthropic.com>
-Date: Fri, 16 Oct 2026 18:09:34 +0000
-Subject: [PATCH 1/2] Add light creative landing page v2: coverflow hero,
- mosaic, discipline columns, masonry collection, illustrated plates
+[Skip to content](#main)
 
----
- .../05-production/site-light-v2/index.html    | 264 ++++++++++++++++++
- 1 file changed, 264 insertions(+)
- create mode 100644 artifacts/05-production/site-light-v2/index.html
+Open online, every hour. Entry is free.
 
-diff --git a/artifacts/05-production/site-light-v2/index.html b/artifacts/05-production/site-light-v2/index.html
-new file mode 100644
-index 0000000..1d1a2e1
---- /dev/null
-+++ b/artifacts/05-production/site-light-v2/index.html
-@@ -0,0 +1,264 @@
-+<!DOCTYPE html>
-+<html lang="en">
-+<head>
-+<meta charset="utf-8">
-+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-+<title>ARCHIVE — The past is not past</title>
-+<meta name="description" content="A fictional digital museum of Nigerian photography, music, fashion and design.">
-+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
-+<style>
-+:root{--chalk:#F5F6F1;--paper:#FFFFFF;--ink:#1C1814;--muted:#5B554D;--indigo:#2A2D8C;--marigold:#F2B31B;--hibiscus:#D6285B;--leaf:#1F7A55;
-+--fd:"Bricolage Grotesque","Arial Narrow",Arial,sans-serif;--ft:"Newsreader",Georgia,serif;--ease:cubic-bezier(.2,.7,.2,1);--gut:clamp(1rem,4vw,3rem);color-scheme:light;
-+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-+*,*::before,*::after{box-sizing:inherit}
-+html{scroll-behavior:smooth;scroll-padding-top:5.5rem}
-+body{margin:0;color:var(--ink);font:400 1.125rem/1.6 var(--ft);background:var(--chalk) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .1 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
-+h1,h2,h3{font-family:var(--fd);line-height:.96;margin:0;letter-spacing:-.02em;font-weight:800}
-+p{margin:0 0 1em;max-width:62ch}a{color:inherit}
-+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
-+.wrap{padding:0 var(--gut);max-width:1400px;margin:0 auto}
-+.sec{padding:clamp(3.5rem,9vw,7rem) 0}
-+.btn{font:700 1rem var(--fd);display:inline-block;padding:.85rem 1.4rem;border-radius:99px;border:2px solid var(--ink);background:var(--ink);color:var(--chalk);text-decoration:none;cursor:pointer;transition:transform .25s var(--ease),background .25s}
-+.btn:hover{transform:translateY(-3px);background:var(--indigo);border-color:var(--indigo)}
-+.btn.alt{background:transparent;color:var(--ink)}.btn.alt:hover{background:var(--marigold);border-color:var(--ink);color:var(--ink)}
-+.skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:#fff;padding:.5rem 1rem;z-index:99}
-+/* plates */
-+.pl{margin:0;position:relative;overflow:hidden;border-radius:4px;border:2px solid var(--ink);background:var(--ink);width:100%;height:100%}
-+.pl svg,.pl img{display:block;width:100%;height:100%;object-fit:cover}
-+.pl figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .9rem .7rem;font:700 .95rem var(--fd);color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
-+/* utility + nav */
-+.util{background:var(--ink);color:var(--chalk);font:700 .85rem var(--fd);text-align:center;padding:.45rem var(--gut)}
-+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--chalk) 90%,transparent);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
-+.bar{display:flex;align-items:center;justify-content:space-between;height:4rem}
-+.logo{font:800 1.6rem var(--fd);text-decoration:none;letter-spacing:-.03em}.logo i{display:inline-block;width:.7rem;height:.7rem;background:var(--hibiscus);border-radius:50%;margin-left:.15rem}
-+nav ul{display:flex;gap:1.6rem;list-style:none;margin:0;padding:0}
-+nav a{font:700 .95rem var(--fd);text-decoration:none;padding:.4rem 0;background:linear-gradient(var(--hibiscus),var(--hibiscus)) 0 100%/0 3px no-repeat;transition:background-size .3s var(--ease)}nav a:hover{background-size:100% 3px}
-+.menu{display:none}
-+@media(max-width:760px){.menu{display:block;font:700 .95rem var(--fd);background:none;border:2px solid var(--ink);border-radius:99px;padding:.4rem 1rem;cursor:pointer}
-+nav ul{position:absolute;left:0;right:0;top:4rem;flex-direction:column;gap:0;background:var(--chalk);border-bottom:2px solid var(--ink);padding:.5rem var(--gut);display:none}nav ul.open{display:flex}nav li a{display:block;padding:.8rem 0;font-size:1.2rem}}
-+/* hero */
-+.hero{position:relative;padding:clamp(2.5rem,6vw,4.5rem) 0 0;overflow:hidden}
-+.burst{position:absolute;right:-60px;top:20px;width:min(34vw,300px);color:var(--indigo);opacity:.55;animation:spin 90s linear infinite}
-+@keyframes spin{to{transform:rotate(360deg)}}
-+.hero h1{font-size:clamp(3.2rem,11.5vw,10rem);max-width:13ch}
-+.hero h1 span{display:block;overflow:hidden;padding-bottom:.06em}.hero h1 b{display:block;animation:rise 1s var(--ease) both}
-+.hero h1 span:nth-child(2) b{animation-delay:.12s;color:var(--indigo)}.hero h1 span:nth-child(3) b{animation-delay:.24s}
-+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
-+.hrow{display:flex;flex-wrap:wrap;gap:1.2rem 3rem;align-items:end;justify-content:space-between;margin-top:1.8rem}
-+.hrow p{font-size:1.25rem;max-width:36ch;margin:0}.ctas{display:flex;gap:.8rem;flex-wrap:wrap}
-+.cf{position:relative;height:clamp(300px,50vw,540px);perspective:1600px;margin-top:2.5rem;touch-action:pan-y;user-select:none}
-+.cfi{position:absolute;left:50%;top:4%;width:clamp(140px,22vw,290px);aspect-ratio:3/4;padding:0;border:0;background:none;cursor:pointer;
-+--step:clamp(55px,13vw,190px);transform:translateX(calc(-50% + var(--o)*var(--step))) rotateY(calc(var(--o)*-26deg)) translateZ(calc(var(--ao)*-90px));z-index:calc(10 - var(--ao));opacity:calc(1.15 - var(--ao)*.3);transition:transform .7s var(--ease),opacity .5s}
-+.cfi:hover .pl{filter:brightness(1.05)}
-+.cfbar{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.2rem 0 2.5rem;font:700 1rem var(--fd)}
-+.cfbar button{width:2.8rem;height:2.8rem;border-radius:50%;border:2px solid var(--ink);background:transparent;cursor:pointer;font:700 1.2rem var(--fd);transition:background .2s}.cfbar button:hover{background:var(--marigold)}
-+.cfbar span{min-width:16ch;text-align:center}
-+/* mosaic */
-+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(190px,24vw,330px);border:2px solid var(--ink)}
-+.mosaic>*{border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:0;min-width:0}
-+.mosaic .pl{border:0;border-radius:0}
-+.cell{padding:clamp(1rem,2.5vw,2rem);display:flex;flex-direction:column;justify-content:space-between;background:var(--paper)}
-+.cell h3{font-size:clamp(1.4rem,2.8vw,2.4rem)}.cell p{font-size:1rem;margin:.6rem 0 0}
-+.cell.dk{background:var(--ink);color:var(--chalk)}.cell.bl{background:var(--indigo);color:#fff}.cell.mg{background:var(--marigold)}
-+.cell small{font:700 .9rem var(--fd);color:inherit;opacity:.8}
-+@media(max-width:760px){.mosaic{grid-template-columns:repeat(2,1fr)}}
-+/* disciplines */
-+h2{font-size:clamp(2.3rem,5.5vw,4.6rem);margin-bottom:1.5rem}
-+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-+.col{padding:0 1.4rem;border-left:2px solid var(--ink)}.col:first-child{padding-left:0;border-left:0}
-+.col h3{font-size:1.7rem;display:flex;justify-content:space-between;align-items:center;padding-bottom:.6rem;border-bottom:2px solid var(--ink);margin-bottom:1rem}
-+.col .pl{aspect-ratio:4/3;height:auto}
-+.col ul{list-style:none;margin:1rem 0 0;padding:0}.col li{padding:.55rem 0;border-bottom:1px solid #1c181433;font-size:1.05rem}
-+.col a{font:700 1rem var(--fd);text-decoration:none}.col a:hover{color:var(--hibiscus)}
-+.col p{font-size:1rem;margin:.8rem 0 0}
-+@media(max-width:980px){.cols{grid-template-columns:repeat(2,1fr);row-gap:2.5rem}.col:nth-child(3){border-left:0;padding-left:0}}
-+@media(max-width:560px){.cols{grid-template-columns:1fr}.col{border-left:0;padding:0}}
-+.fine{font-size:.95rem;color:var(--muted);margin-top:2rem}
-+/* split story */
-+.split{display:grid;grid-template-columns:1fr 1fr;border-block:2px solid var(--ink);background:var(--marigold)}
-+.split>div:first-child{padding:clamp(2rem,6vw,6rem) var(--gut);display:flex;flex-direction:column;justify-content:center}
-+.split .pl{border:0;border-radius:0;min-height:420px;border-left:2px solid var(--ink)}
-+.split h2{margin-bottom:1rem}.note{font-size:.95rem;font-style:italic;border-left:4px solid var(--ink);padding-left:1rem;margin-top:1rem}
-+@media(max-width:760px){.split{grid-template-columns:1fr}.split .pl{border-left:0;border-top:2px solid var(--ink)}}
-+/* timeline */
-+.tl{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(1.5rem,4vw,4rem);align-items:center}
-+.tn{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.6rem;border-bottom:2px solid var(--ink);margin-bottom:1.6rem}
-+.tn button{flex:0 0 auto;font:800 clamp(1.2rem,2.6vw,2rem) var(--fd);background:none;border:0;padding:.3rem 1rem;cursor:pointer;color:var(--muted);border-radius:99px;transition:color .25s,background .25s}
-+.tn button[aria-selected=true]{background:var(--indigo);color:#fff}
-+.tb h3{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:1rem}.tb p{font-size:1.2rem}
-+.tb>*,.tl .pl{animation:swap .5s var(--ease)}.tl .pl{aspect-ratio:4/5;height:auto;max-width:420px;justify-self:center}
-+@keyframes swap{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
-+@media(max-width:760px){.tl{grid-template-columns:1fr}}
-+/* collection */
-+.chead{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:1rem;border-bottom:2px solid var(--ink);margin-bottom:1.5rem}
-+.chead h2{margin-bottom:.4rem}
-+.fl{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem}.fl button{font:700 .95rem var(--fd);padding:.4rem 1rem;border-radius:99px;border:2px solid var(--ink);background:none;cursor:pointer}.fl button[aria-pressed=true]{background:var(--ink);color:var(--chalk)}
-+.mas{columns:4 220px;column-gap:1.2rem}
-+.mas button{all:unset;cursor:pointer;display:block;margin-bottom:1.2rem;break-inside:avoid;width:100%;border-radius:4px}
-+.mas button:focus-visible{outline:3px solid var(--indigo);outline-offset:4px}
-+.mas .pl{height:auto;aspect-ratio:var(--ar);transition:transform .35s var(--ease)}.mas button:hover .pl{transform:rotate(-1.5deg) translateY(-6px)}
-+.mas button[aria-pressed=true] .pl{outline:4px solid var(--hibiscus);outline-offset:3px}
-+.mas span{display:block;font:700 1rem var(--fd);margin-top:.5rem}.mas em{display:block;font-size:.9rem;color:var(--muted)}
-+.more{text-align:center;margin-top:1rem}
-+.detail{margin-top:2rem;background:var(--paper);border:2px solid var(--ink);border-radius:4px;padding:1.5rem;display:grid;gap:.3rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-+.detail h3{font-size:1.8rem;grid-column:1/-1}.detail p{margin:0;color:var(--muted);font-size:1rem}
-+/* dark band */
-+.band{background:var(--ink);color:var(--chalk);border-radius:2rem 2rem 0 0;overflow:hidden}
-+.band h2{max-width:14ch}.fan{display:flex;justify-content:center;padding:2rem 0 1rem}
-+.fan .pl{flex:0 0 auto;width:clamp(120px,19vw,240px);height:auto;aspect-ratio:1;margin:0 -1.2rem;transform:rotate(var(--r)) translateY(var(--y));transition:transform .5s var(--ease);border-color:var(--chalk)}
-+.fan:hover .pl{transform:rotate(0) translateY(0);margin:0 .3rem}
-+/* close + footer */
-+.close{background:var(--indigo);color:#fff;text-align:center}.close h2{font-size:clamp(2.8rem,9vw,8rem);margin:0 auto 2rem;max-width:12ch}
-+.close .btn{background:var(--marigold);color:var(--ink);border-color:var(--marigold)}.close .btn:hover{background:#fff;border-color:#fff}
-+footer{padding:3rem 0;font-size:1rem}.fg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}
-+footer h3{font-size:1.1rem;margin-bottom:.6rem}footer ul{list-style:none;margin:0;padding:0}footer li{margin:.3rem 0}
-+.ff{margin-top:2rem;padding-top:1rem;border-top:2px solid var(--ink);color:var(--muted);font-size:.95rem}
-+@media(max-width:760px){.fg{grid-template-columns:1fr}}
-+.rv{clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease)}.rv.in,.noreveal .rv{clip-path:inset(0)}
-+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.rv{clip-path:none}}
-+</style>
-+</head>
-+<body>
-+<a class="skip" href="#main">Skip to content</a>
-+<div class="util">Open online, every hour. Entry is free.</div>
-+<header><div class="wrap bar">
-+  <a class="logo" href="#top" aria-label="ARCHIVE home">ARCHIVE<i></i></a>
-+  <nav aria-label="Primary"><button class="menu" aria-expanded="false" aria-controls="links">Menu</button>
-+  <ul id="links"><li><a href="#disciplines">Disciplines</a></li><li><a href="#story">Featured story</a></li><li><a href="#years">Through the years</a></li><li><a href="#collection">Collection</a></li></ul></nav>
-+</div></header>
-+
-+<main id="main">
-+<section class="hero" id="top">
-+  <div class="burst" id="burst" aria-hidden="true"></div>
-+  <div class="wrap">
-+    <h1 aria-label="The past is not past."><span><b>The past</b></span><span><b>is not</b></span><span><b>past.</b></span></h1>
-+    <div class="hrow"><p>A digital museum of Nigerian photography, music, fashion and design. The stories that shaped us, and the creativity that still moves us.</p>
-+    <div class="ctas"><a class="btn" href="#disciplines">Enter the archive</a><a class="btn alt" href="#collection">Explore the collection</a></div></div>
-+  </div>
-+  <div class="cf" id="cf" role="group" aria-roledescription="carousel" aria-label="Featured plates"></div>
-+  <div class="cfbar"><button id="prev" aria-label="Previous plate">&larr;</button><span id="cap" aria-live="polite"></span><button id="next" aria-label="Next plate">&rarr;</button></div>
-+</section>
-+
-+<section class="wrap" style="padding-bottom:clamp(3rem,8vw,6rem)" aria-label="At a glance">
-+  <div class="mosaic" id="mosaic"></div>
-+</section>
-+
-+<section class="sec" id="disciplines" style="background:var(--paper);border-block:2px solid var(--ink)"><div class="wrap">
-+  <h2 class="rv">Four ways into the archive</h2>
-+  <div class="cols" id="cols"></div>
-+  <p class="fine">The names listed are real starting points for research, not a complete or ranked list. Plates are original illustrations.</p>
-+</div></section>
-+
-+<section class="split" id="story">
-+  <div><h2>Hairstyles as portraiture</h2>
-+  <p>From 1968, the photographer J. D. 'Okhai Ojeikere documented Nigerian hairstyles, shot from behind and in profile. Hair becomes sculpture, and each portrait records how people chose to present themselves.</p>
-+  <p>It shows how an everyday subject can hold a whole culture's craft.</p>
-+  <p class="note">Demonstration copy. Confirm dates and captions with his estate or a museum source before publishing. No Ojeikere photographs are shown here.</p></div>
-+  <div id="storyart" style="min-height:420px"></div>
-+</section>
-+
-+<section class="sec" id="years"><div class="wrap">
-+  <h2 class="rv">Through the years</h2>
-+  <div class="tl"><div><div class="tn" role="tablist" aria-label="Periods" id="tn"></div><div class="tb" id="tb" role="tabpanel" aria-live="polite"></div></div><div id="tart"></div></div>
-+</div></section>
-+
-+<section class="sec" id="collection" style="background:var(--paper);border-block:2px solid var(--ink)"><div class="wrap">
-+  <div class="chead"><div><h2 class="rv">The collection</h2><p>Select a plate to read its record. These are demonstration entries that show the metadata each real object will carry.</p></div>
-+  <div class="fl" id="fl" role="group" aria-label="Filter by discipline"></div></div>
-+  <div class="mas" id="mas"></div>
-+  <div class="more"><button class="btn alt" id="more">Load more plates</button></div>
-+  <div class="detail" id="detail" aria-live="polite"><h3>Choose a plate</h3><p>Its title, creator, date, source and rights will appear here.</p></div>
-+</div></section>
-+
-+<section class="band"><div class="wrap sec"><h2>Records that still spin</h2><p style="max-width:48ch">Sleeves are where music met graphic design. Hover to spread the stack.</p><div class="fan" id="fan"></div></div></section>
-+
-+<section class="sec close"><div class="wrap"><h2 class="rv">History is still being made.</h2><a class="btn" href="#top">Back to the beginning</a></div></section>
-+</main>
-+
-+<footer><div class="wrap"><div class="fg">
-+  <div><h3>ARCHIVE</h3><p>A fictional digital museum of Nigerian creative history. It aims to show how past work still shapes the present.</p></div>
-+  <div><h3>Explore</h3><ul><li><a href="#disciplines">Disciplines</a></li><li><a href="#story">Featured story</a></li><li><a href="#years">Through the years</a></li><li><a href="#collection">Collection</a></li></ul></div>
-+  <div><h3>Credits</h3><ul><li>Plates: original illustrations</li><li>Type: Bricolage Grotesque, Newsreader (SIL OFL)</li></ul></div>
-+</div><p class="ff">Historical statements are demonstration copy awaiting source verification. Swap illustrated plates for licensed photographs through the PHOTOS map in the script.</p></div></footer>
-+
-+<script>
-+const $=s=>document.querySelector(s),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-+const PHOTOS={}; // id -> licensed image URL, e.g. {"cf0":"photos/portrait.jpg"}
-+const PAL=[['#2A2D8C','#F2B31B','#D6285B','#F5F6F1'],['#D6285B','#F2B31B','#2A2D8C','#F5F6F1'],['#F2B31B','#2A2D8C','#D6285B','#1C1814'],['#1F7A55','#F2B31B','#F5F6F1','#D6285B'],['#F5F6F1','#D6285B','#2A2D8C','#F2B31B'],['#1C1814','#F2B31B','#D6285B','#F5F6F1']];
-+let U=0;
-+function art(t,pi,n){const [a,b,c,d]=PAL[pi%PAL.length],u=++U,k=n%3-1;let s='';
-+ if(t=='p')s=`<defs><pattern id="h${u}" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" fill="#000" opacity=".22"/></pattern></defs><rect width="300" height="400" fill="${a}"/><circle cx="${150+k*18}" cy="165" r="118" fill="${b}"/><path d="M20 400C32 300 96 282 150 282s118 18 130 118z" fill="${c}"/><rect x="128" y="225" width="44" height="70" fill="#1C1814"/><ellipse cx="${150+k*6}" cy="190" rx="46" ry="58" fill="#1C1814"/><g transform="rotate(${k*9} 150 150)"><path d="M92 158C84 86 150 52 210 96c26 22 12 58 2 66-28-34-82-36-120-4z" fill="${d}"/><path d="M110 110c30-26 70-22 96 4" stroke="${a}" stroke-width="5" fill="none"/></g><rect width="300" height="400" fill="url(#h${u})"/><rect x="10" y="10" width="280" height="380" fill="none" stroke="#fff" stroke-opacity=".6"/>`;
-+ else if(t=='m'){let g='';for(let r=100;r>48;r-=10)g+=`<circle cx="150" cy="150" r="${r}" fill="none" stroke="#fff" stroke-opacity=".16"/>`;
-+  s=`<rect width="300" height="400" fill="${a}"/><circle cx="150" cy="150" r="112" fill="#1C1814"/>${g}<path d="M70 90a100 100 0 0 1 90-48" stroke="#fff" stroke-opacity=".3" stroke-width="6" fill="none"/><circle cx="150" cy="150" r="44" fill="${b}"/><circle cx="150" cy="150" r="6" fill="${a}"/><rect y="290" width="300" height="110" fill="${c}"/><text x="20" y="352" font-family="Bricolage Grotesque,Arial" font-weight="800" font-size="44" fill="${d}">Vol. ${n+1}</text><rect x="20" y="364" width="120" height="6" fill="${d}"/>`}
-+ else if(t=='f'){for(let y=0;y<8;y++)for(let x=0;x<7;x++){const cx=x*50+(y%2?25:0),cy=y*50+25;s+=`<circle cx="${cx}" cy="${cy}" r="20" fill="none" stroke="${b}" stroke-width="3"/><circle cx="${cx}" cy="${cy}" r="11" fill="none" stroke="${c}" stroke-width="3"/><circle cx="${cx}" cy="${cy}" r="4" fill="${d}"/>`}s=`<rect width="300" height="400" fill="${a}"/>`+s}
-+ else s=`<defs><pattern id="s${u}" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="14" fill="${d}" opacity=".25"/></pattern></defs><rect width="300" height="400" fill="${a}"/><rect width="300" height="400" fill="url(#s${u})"/><circle cx="${180+k*20}" cy="140" r="104" fill="${b}"/><rect x="28" y="250" width="170" height="20" fill="${c}"/><rect x="28" y="282" width="112" height="20" fill="${c}"/><text x="26" y="372" font-family="Bricolage Grotesque,Arial" font-weight="800" font-size="62" fill="${d==a?'#1C1814':d}">Mark</text>`;
-+ return `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Original illustration">${s}</svg>`}
-+function plate(id,t,pi,n,cap){const im=PHOTOS[id]?`<img src="${PHOTOS[id]}" alt="${cap||''}" loading="lazy">`:art(t,pi,n);return `<figure class="pl">${im}${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`}
-+const NAME={p:'Photography',m:'Music',f:'Fashion',d:'Design'};
-+
-+// burst ornament
-+(()=>{let l='';for(let i=0;i<36;i++){const a=i*10*Math.PI/180;l+=`<line x1="${100+60*Math.cos(a)}" y1="${100+60*Math.sin(a)}" x2="${100+(i%2?80:92)*Math.cos(a)}" y2="${100+(i%2?80:92)*Math.sin(a)}"/>`}
-+$('#burst').innerHTML=`<svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 5"><circle cx="100" cy="100" r="46" stroke-dasharray="none"/><circle cx="100" cy="100" r="6" fill="currentColor"/>${l}</svg>`})();
-+
-+// coverflow
-+const CF=[['p',0],['m',1],['f',2],['d',3],['p',4],['m',5],['f',0]].map((x,i)=>({t:x[0],pi:x[1],n:i,cap:['Portrait study','Record sleeve','Resist-dye cloth','Poster mark','Portrait study II','Record sleeve II','Resist-dye cloth II'][i]}));
-+let cur=3;const cf=$('#cf');
-+cf.innerHTML=CF.map((x,i)=>`<button class="cfi" data-i="${i}" aria-label="${x.cap}">${plate('cf'+i,x.t,x.pi,x.n,NAME[x.t])}</button>`).join('');
-+function setCF(){cf.querySelectorAll('.cfi').forEach((b,i)=>{const o=i-cur;b.style.setProperty('--o',o);b.style.setProperty('--ao',Math.min(Math.abs(o),4));b.style.pointerEvents=Math.abs(o)>3?'none':'';b.style.opacity=Math.abs(o)>3?0:''});$('#cap').textContent=`${CF[cur].cap}  (${cur+1} of ${CF.length})`}
-+const go=d=>{cur=Math.max(0,Math.min(CF.length-1,cur+d));setCF()};
-+$('#prev').onclick=()=>go(-1);$('#next').onclick=()=>go(1);
-+cf.onclick=e=>{const b=e.target.closest('.cfi');if(b&&!drag){cur=+b.dataset.i;setCF()}};
-+let sx=null,drag=false;
-+cf.addEventListener('pointerdown',e=>{sx=e.clientX;drag=false});
-+cf.addEventListener('pointerup',e=>{if(sx!==null&&Math.abs(e.clientX-sx)>40){drag=true;go(e.clientX<sx?1:-1);setTimeout(()=>drag=false,50)}sx=null});
-+cf.addEventListener('keydown',e=>{if(e.key=='ArrowRight')go(1);if(e.key=='ArrowLeft')go(-1)});
-+setCF();
-+
-+// mosaic
-+const M=[['a','p',0,0],['t','bl','Free to explore','Every room is open at any hour, on any screen.'],['a','m',1,1],['b'],
-+ ['t','','Four disciplines','Photography, music, fashion and design, shown side by side.'],['t','dk','Now showing','Hairstyles as portraiture','#story'],['a','f',2,2],['t','mg','Start with one object','Pick any plate in the collection.']];
-+$('#mosaic').innerHTML=M.map((c,i)=>c[0]=='a'?`<div>${plate('m'+i,c[1],c[2],c[3])}</div>`:c[0]=='b'?`<div class="cell" style="background:var(--chalk);align-items:center;justify-content:center"><div style="width:70%;color:var(--hibiscus)">${$('#burst').innerHTML}</div></div>`:
-+ `<div class="cell ${c[1]}"><div><h3>${c[2]}</h3><p>${c[3]}</p></div>${c[4]?`<a href="${c[4]}" style="font:700 1rem var(--fd)">Read the story</a>`:''}</div>`).join('');
-+
-+// disciplines
-+const DC=[['p','Photography',0,'Studio, street and documentary work that kept ordinary moments.',['J. D. \'Okhai Ojeikere','Sunmi Smart-Cole','Rotimi Fani-Kayode']],
-+ ['m','Music',1,'Highlife, juju and Afrobeat, and the sleeves that carried them.',['Fela Kuti','King Sunny Adé','Victor Olaiya']],
-+ ['f','Fashion',2,'Textiles, tailoring and regional dress, each with its own history.',['Nike Davies-Okundaye','Shade Thomas-Fahm','Deola Sagoe']],
-+ ['d','Design',3,'Posters, print, objects and the marks of movements.',['Bruce Onobrakpeya','Yusuf Grillo','Ben Enwonwu']]];
-+$('#cols').innerHTML=DC.map((c,i)=>`<div class="col"><h3>${c[1]}<a href="#collection" aria-label="See ${c[1]} in the collection">&rarr;</a></h3>${plate('d'+i,c[0],c[2],i+1)}<p>${c[3]}</p><ul>${c[4].map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('');
-+$('#storyart').innerHTML=plate('story','p',1,2,'Original illustration, not an archival photograph');$('#storyart').firstChild.style.cssText='height:100%;min-height:420px;border:0;border-radius:0;border-left:2px solid var(--ink)';
-+
-+// timeline
-+const T=[['1950s–60s','Highlife and independence-era portraits','Highlife bands filled dance halls while studio photographers recorded a new, confident generation.','p',0],['1968','A hairstyle series begins','J. D. \'Okhai Ojeikere starts documenting Nigerian hairstyles, building a long photographic record.','p',3],['Late 1960s–70s','Afrobeat takes shape','Fela Kuti develops Afrobeat, joining highlife, jazz and funk with sharp political commentary.','m',1],['2010s on','Afrobeats reaches the world','A newer pop sound, called Afrobeats, grows from many influences. It is related to, but not the same as, Afrobeat.','m',2]];
-+const tn=$('#tn');
-+function showT(i){$('#tb').innerHTML=`<h3>${T[i][1]}</h3><p>${T[i][2]}</p>`;$('#tart').innerHTML=plate('t'+i,T[i][3],T[i][4],i,T[i][0])}
-+tn.innerHTML=T.map((x,i)=>`<button role="tab" aria-selected="${!i}" tabindex="${i?-1:0}">${x[0]}</button>`).join('');
-+const tb=[...tn.children];
-+tn.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tb.forEach((o,i)=>{const on=o===b;o.setAttribute('aria-selected',on);o.tabIndex=on?0:-1;if(on)showT(i)})});
-+tn.addEventListener('keydown',e=>{const i=tb.indexOf(document.activeElement);if(i<0)return;const n=e.key=='ArrowRight'?i+1:e.key=='ArrowLeft'?i-1:null;if(n===null)return;e.preventDefault();const x=tb[(n+tb.length)%tb.length];x.focus();x.click()});
-+showT(0);
-+
-+// collection
-+const CT=['p','m','f','d'],ARs=['3/4','1/1','4/5','3/5','4/3','3/4'];
-+const ALL=Array.from({length:16},(_,i)=>({t:CT[i%4],pi:(i*2+i%3)%6,n:i,ar:ARs[(i*5)%6],title:`${NAME[CT[i%4]]} plate ${String(Math.floor(i/4)+1).padStart(2,'0')}`}));
-+let shown=8,filt='all';const mas=$('#mas');
-+function draw(){const L=ALL.filter(x=>filt=='all'||x.t==filt);mas.innerHTML=L.slice(0,shown).map(x=>`<button aria-pressed="false" data-i="${x.n}"><figure class="pl" style="--ar:${x.ar}">${PHOTOS['c'+x.n]?`<img src="${PHOTOS['c'+x.n]}" alt="${x.title}">`:art(x.t,x.pi,x.n)}</figure><span>${x.title}</span><em>${NAME[x.t]}</em></button>`).join('');$('#more').hidden=shown>=L.length}
-+$('#fl').innerHTML=[['all','All'],...CT.map(t=>[t,NAME[t]])].map(f=>`<button aria-pressed="${f[0]=='all'}" data-f="${f[0]}">${f[1]}</button>`).join('');
-+$('#fl').onclick=e=>{const b=e.target.closest('button');if(!b)return;filt=b.dataset.f;shown=8;$('#fl').querySelectorAll('button').forEach(o=>o.setAttribute('aria-pressed',o===b));draw()};
-+$('#more').onclick=()=>{shown+=8;draw()};
-+mas.onclick=e=>{const b=e.target.closest('button');if(!b)return;const x=ALL[b.dataset.i];mas.querySelectorAll('button').forEach(o=>o.setAttribute('aria-pressed',o===b));
-+ $('#detail').innerHTML=`<h3>${x.title}</h3><p><b>Discipline</b><br>${NAME[x.t]}</p><p><b>Creator</b><br>ARCHIVE studio, original illustration</p><p><b>Date</b><br>2026</p><p><b>Source</b><br>Generated for this project</p><p><b>Rights</b><br>Free to use within this project</p>`};
-+draw();
-+
-+// fan of sleeves
-+$('#fan').innerHTML=[[-14,18],[-5,4],[5,4],[14,18]].map((r,i)=>`<div class="pl" style="--r:${r[0]}deg;--y:${r[1]}px">${PHOTOS['f'+i]?`<img src="${PHOTOS['f'+i]}" alt="">`:art('m',i+1,i+4)}</div>`).join('');
-+
-+// nav + reveal
-+const mb=$('.menu'),ul=$('#links');
-+mb.onclick=()=>{const o=ul.classList.toggle('open');mb.setAttribute('aria-expanded',o)};
-+ul.onclick=e=>{if(e.target.tagName=='A'){ul.classList.remove('open');mb.setAttribute('aria-expanded',false)}};
-+if(rm||!('IntersectionObserver' in window))document.body.classList.add('noreveal');
-+else{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});document.querySelectorAll('.rv').forEach(n=>io.observe(n))}
-+</script>
-+</body>
-+</html>
--- 
-2.43.0
+[ARCHIVE](#top)
 
+- [Disciplines](#disciplines)
+- [Featured story](#story)
+- [Through the years](#years)
+- [Collection](#collection)
+- [Make a plate](#make)
 
-From 534aa0828cb180f416c36f0df9e6be1262e6d29d Mon Sep 17 00:00:00 2001
-From: Claude <noreply@anthropic.com>
-Date: Fri, 16 Oct 2026 18:50:26 +0000
-Subject: [PATCH 2/2] Light v2: nav contrast fix, nav motion, card tilt, plate
- maker, footer, photo upload
+# **The past****is not****past.**
 
----
- .../05-production/site-light-v2/index.html    | 97 +++++++++++++++++--
- 1 file changed, 87 insertions(+), 10 deletions(-)
+A digital museum of Nigerian photography, music, fashion and design. The stories that shaped us, and the creativity that still moves us.
 
-diff --git a/artifacts/05-production/site-light-v2/index.html b/artifacts/05-production/site-light-v2/index.html
-index 1d1a2e1..bfe1b62 100644
---- a/artifacts/05-production/site-light-v2/index.html
-+++ b/artifacts/05-production/site-light-v2/index.html
-@@ -5,6 +5,7 @@
- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
- <title>ARCHIVE — The past is not past</title>
- <meta name="description" content="A fictional digital museum of Nigerian photography, music, fashion and design.">
-+<meta name="color-scheme" content="light only">
- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
- <style>
- :root{--chalk:#F5F6F1;--paper:#FFFFFF;--ink:#1C1814;--muted:#5B554D;--indigo:#2A2D8C;--marigold:#F2B31B;--hibiscus:#D6285B;--leaf:#1F7A55;
-@@ -114,17 +115,45 @@ footer{padding:3rem 0;font-size:1rem}.fg{display:grid;grid-template-columns:2fr
- footer h3{font-size:1.1rem;margin-bottom:.6rem}footer ul{list-style:none;margin:0;padding:0}footer li{margin:.3rem 0}
- .ff{margin-top:2rem;padding-top:1rem;border-top:2px solid var(--ink);color:var(--muted);font-size:.95rem}
- @media(max-width:760px){.fg{grid-template-columns:1fr}}
-+.cg{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.5rem,5vw,5rem);align-items:center;text-align:left}.close h2{margin:0 0 1rem;max-width:11ch}.close p{max-width:44ch}
-+.cr{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.1rem 0}.cr button{font:700 .95rem var(--fd);padding:.5rem 1rem;border-radius:99px;border:2px solid #fff;background:none;color:#fff;cursor:pointer;transition:background .2s,color .2s,transform .2s var(--ease)}.cr button:hover{transform:translateY(-2px)}.cr button[aria-pressed=true]{background:#fff;color:var(--indigo)}
-+.cr .sw{width:2.6rem;height:2.6rem;padding:0;border-radius:50%}.cr .sw[aria-pressed=true]{outline:3px solid var(--marigold);outline-offset:3px;background-origin:border-box}
-+.cl{display:grid;gap:.3rem;font:700 .95rem var(--fd);margin:1.1rem 0}.cl input{font:500 1.1rem var(--ft);padding:.7rem 1rem;border-radius:8px;border:2px solid #fff;background:transparent;color:#fff;max-width:22rem}.cl input:focus-visible{outline:3px solid var(--marigold)}
-+.cprev{perspective:1100px;display:flex;justify-content:center}.cprev .pl{width:min(100%,340px);height:auto;aspect-ratio:3/4;border-color:#fff;transition:transform .25s ease-out;box-shadow:12px 12px 0 var(--marigold)}
-+.close .cr button.btn{background:var(--marigold);color:var(--ink);border-color:var(--marigold)}.tiny{font-size:.95rem;opacity:.85;margin-top:1rem}
-+.ft{background:var(--ink);color:var(--chalk);padding:0}.ft a,.ft button.fb{color:var(--chalk)}
-+.mq{background:var(--marigold);color:var(--ink);overflow:hidden;border-block:2px solid var(--ink);font:800 clamp(1.4rem,3.4vw,2.6rem) var(--fd);white-space:nowrap}.mqt{display:inline-block;padding:.5rem 0;animation:mqa 30s linear infinite}.mq:hover .mqt{animation-play-state:paused}.mqt span{margin-right:1.4rem}.mqt span::after{content:"";display:inline-block;width:.5em;height:.5em;border-radius:50%;background:var(--hibiscus);margin-left:1.4rem}
-+@keyframes mqa{to{transform:translateX(-50%)}}
-+.big{display:flex;justify-content:space-between;font:800 clamp(3.4rem,19vw,17rem)/.85 var(--fd);letter-spacing:-.04em;padding:3rem 0 2rem;overflow:hidden}.big span{display:inline-block;transition:transform .4s var(--ease),color .3s;cursor:default}.big span:hover{transform:translateY(-.07em) rotate(-5deg);color:var(--marigold)}
-+.ft .fg{grid-template-columns:1.6fr 1fr 1fr 1fr;padding-bottom:2rem}.ft h3{font-size:1.1rem;color:var(--marigold)}
-+.fb{all:unset;cursor:pointer;font:500 1.05rem var(--ft);color:var(--chalk);background:linear-gradient(var(--hibiscus),var(--hibiscus)) 0 100%/0 2px no-repeat;transition:background-size .3s var(--ease)}.fb:hover,.fb:focus-visible{background-size:100% 2px}.fb:focus-visible{outline:3px solid var(--marigold);outline-offset:3px}
-+.ft ul a{text-decoration:none;background:linear-gradient(var(--hibiscus),var(--hibiscus)) 0 100%/0 2px no-repeat;transition:background-size .3s var(--ease)}.ft ul a:hover{background-size:100% 2px}
-+.ft .ff{border-color:#f5f6f133;color:#f5f6f1b3;padding-bottom:2rem}.top{font:700 1rem var(--fd)!important;border:2px solid var(--chalk)!important;border-radius:99px;padding:.5rem 1.1rem!important;background:none!important;margin-top:.8rem;display:inline-block}.top:hover{background:var(--marigold)!important;color:var(--ink)!important;border-color:var(--marigold)!important}
-+@media(max-width:860px){.cg{grid-template-columns:1fr}.ft .fg{grid-template-columns:1fr 1fr}}
-+header{background:#F5F6F1;background:rgba(245,246,241,.95);color:#1C1814}
-+nav a,.logo,.menu{color:#1C1814!important}.menu{background:#F5F6F1}
-+.bar{transition:height .35s var(--ease)}header.sm .bar{height:3.1rem}
-+.prog{position:absolute;left:0;bottom:-2px;width:100%;height:4px;background:var(--hibiscus);transform-origin:0 50%;transform:scaleX(0)}
-+nav a[aria-current]{background-size:100% 3px}
-+@media(max-width:760px){nav ul{top:100%;background:#F5F6F1}nav ul.open{animation:drop .3s var(--ease)}@keyframes drop{from{opacity:0;transform:translateY(-8px)}}}
-+.util{display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap}.uphoto{font:700 .85rem var(--fd);background:var(--marigold);color:var(--ink);border:0;border-radius:99px;padding:.25rem .9rem;cursor:pointer}.uphoto:hover{background:#fff}
-+.pl img,.pl svg{transition:transform .7s var(--ease)}.pl:hover img,.pl:hover svg{transform:scale(1.06)}
-+.pl::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.4),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}.pl:hover::after{opacity:1}
-+.mas .pl,.cols .pl,.mosaic .pl{transform:perspective(800px) rotateX(var(--ty,0deg)) rotateY(var(--tx,0deg));transition:transform .25s ease-out}
-+.mas button:hover .pl{transform:perspective(800px) rotateX(var(--ty,0deg)) rotateY(var(--tx,0deg)) translateY(-6px)}
-+.mas button{animation:pop .6s var(--ease) both;animation-delay:calc(var(--i,0)*60ms)}
-+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
- .rv{clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease)}.rv.in,.noreveal .rv{clip-path:inset(0)}
- @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.rv{clip-path:none}}
- </style>
- </head>
- <body>
- <a class="skip" href="#main">Skip to content</a>
--<div class="util">Open online, every hour. Entry is free.</div>
--<header><div class="wrap bar">
-+<div class="util"><span>Open online, every hour. Entry is free.</span><button id="addph" type="button" class="uphoto">Add your photos</button><input id="phin" type="file" accept="image/*" multiple hidden aria-label="Choose photographs"></div>
-+<header id="hd"><div class="prog" id="prog"></div><div class="wrap bar">
-   <a class="logo" href="#top" aria-label="ARCHIVE home">ARCHIVE<i></i></a>
-   <nav aria-label="Primary"><button class="menu" aria-expanded="false" aria-controls="links">Menu</button>
--  <ul id="links"><li><a href="#disciplines">Disciplines</a></li><li><a href="#story">Featured story</a></li><li><a href="#years">Through the years</a></li><li><a href="#collection">Collection</a></li></ul></nav>
-+  <ul id="links"><li><a href="#disciplines">Disciplines</a></li><li><a href="#story">Featured story</a></li><li><a href="#years">Through the years</a></li><li><a href="#collection">Collection</a></li><li><a href="#make">Make a plate</a></li></ul></nav>
- </div></header>
- 
- <main id="main">
-@@ -172,14 +201,24 @@ footer h3{font-size:1.1rem;margin-bottom:.6rem}footer ul{list-style:none;margin:
- 
- <section class="band"><div class="wrap sec"><h2>Records that still spin</h2><p style="max-width:48ch">Sleeves are where music met graphic design. Hover to spread the stack.</p><div class="fan" id="fan"></div></div></section>
- 
--<section class="sec close"><div class="wrap"><h2 class="rv">History is still being made.</h2><a class="btn" href="#top">Back to the beginning</a></div></section>
-+<section class="sec close" id="make"><div class="wrap cg">
-+  <div><h2 class="rv">History is still being made.</h2><p>Make a plate of your own. Choose a discipline and a palette, name it, then shuffle until it feels right.</p><div id="cctl"></div><p class="tiny">Your plate lives in this browser tab only. Nothing is uploaded or submitted.</p></div>
-+  <div class="cprev" id="cprev"></div>
-+</div></section>
- </main>
- 
--<footer><div class="wrap"><div class="fg">
--  <div><h3>ARCHIVE</h3><p>A fictional digital museum of Nigerian creative history. It aims to show how past work still shapes the present.</p></div>
--  <div><h3>Explore</h3><ul><li><a href="#disciplines">Disciplines</a></li><li><a href="#story">Featured story</a></li><li><a href="#years">Through the years</a></li><li><a href="#collection">Collection</a></li></ul></div>
--  <div><h3>Credits</h3><ul><li>Plates: original illustrations</li><li>Type: Bricolage Grotesque, Newsreader (SIL OFL)</li></ul></div>
--</div><p class="ff">Historical statements are demonstration copy awaiting source verification. Swap illustrated plates for licensed photographs through the PHOTOS map in the script.</p></div></footer>
-+<footer class="ft">
-+<div class="mq" aria-hidden="true"><div class="mqt" id="mqt"></div></div>
-+<div class="wrap">
-+  <div class="big" id="big" aria-label="ARCHIVE"></div>
-+  <div class="fg">
-+    <div><h3>About</h3><p>A fictional digital museum of Nigerian creative history. It aims to show how past work still shapes the present.</p></div>
-+    <div><h3>See in the collection</h3><ul><li><button class="fb" data-f="p">Photography</button></li><li><button class="fb" data-f="m">Music</button></li><li><button class="fb" data-f="f">Fashion</button></li><li><button class="fb" data-f="d">Design</button></li></ul></div>
-+    <div><h3>Explore</h3><ul><li><a href="#story">Featured story</a></li><li><a href="#years">Through the years</a></li><li><a href="#collection">Collection</a></li><li><a href="#make">Make a plate</a></li></ul></div>
-+    <div><h3>Open now</h3><p id="clock">Every hour, online.</p><p style="margin:0">Type: Bricolage Grotesque, Newsreader (SIL OFL)</p><a class="top" href="#top">Back to top</a></div>
-+  </div>
-+  <p class="ff">Plates are original illustrations. Historical statements are demonstration copy awaiting source verification. Photographs will appear only once licensed and credited.</p>
-+</div></footer>
- 
- <script>
- const $=s=>document.querySelector(s),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-@@ -242,7 +281,7 @@ showT(0);
- const CT=['p','m','f','d'],ARs=['3/4','1/1','4/5','3/5','4/3','3/4'];
- const ALL=Array.from({length:16},(_,i)=>({t:CT[i%4],pi:(i*2+i%3)%6,n:i,ar:ARs[(i*5)%6],title:`${NAME[CT[i%4]]} plate ${String(Math.floor(i/4)+1).padStart(2,'0')}`}));
- let shown=8,filt='all';const mas=$('#mas');
--function draw(){const L=ALL.filter(x=>filt=='all'||x.t==filt);mas.innerHTML=L.slice(0,shown).map(x=>`<button aria-pressed="false" data-i="${x.n}"><figure class="pl" style="--ar:${x.ar}">${PHOTOS['c'+x.n]?`<img src="${PHOTOS['c'+x.n]}" alt="${x.title}">`:art(x.t,x.pi,x.n)}</figure><span>${x.title}</span><em>${NAME[x.t]}</em></button>`).join('');$('#more').hidden=shown>=L.length}
-+function draw(){const L=ALL.filter(x=>filt=='all'||x.t==filt);mas.innerHTML=L.slice(0,shown).map((x,k)=>`<button style="--i:${k%8}" aria-pressed="false" data-i="${x.n}"><figure class="pl" style="--ar:${x.ar}">${PHOTOS['c'+x.n]?`<img src="${PHOTOS['c'+x.n]}" alt="${x.title}">`:art(x.t,x.pi,x.n)}</figure><span>${x.title}</span><em>${NAME[x.t]}</em></button>`).join('');$('#more').hidden=shown>=L.length}
- $('#fl').innerHTML=[['all','All'],...CT.map(t=>[t,NAME[t]])].map(f=>`<button aria-pressed="${f[0]=='all'}" data-f="${f[0]}">${f[1]}</button>`).join('');
- $('#fl').onclick=e=>{const b=e.target.closest('button');if(!b)return;filt=b.dataset.f;shown=8;$('#fl').querySelectorAll('button').forEach(o=>o.setAttribute('aria-pressed',o===b));draw()};
- $('#more').onclick=()=>{shown+=8;draw()};
-@@ -253,6 +292,44 @@ draw();
- // fan of sleeves
- $('#fan').innerHTML=[[-14,18],[-5,4],[5,4],[14,18]].map((r,i)=>`<div class="pl" style="--r:${r[0]}deg;--y:${r[1]}px">${PHOTOS['f'+i]?`<img src="${PHOTOS['f'+i]}" alt="">`:art('m',i+1,i+4)}</div>`).join('');
- 
-+// nav motion
-+const hd=$('#hd'),pg=$('#prog');
-+function onS(){const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;hd.classList.toggle('sm',y>40);pg.style.transform='scaleX('+(h>0?y/h:0)+')'}
-+addEventListener('scroll',onS,{passive:true});onS();
-+const nl=[...document.querySelectorAll('#links a')];
-+if('IntersectionObserver' in window){const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)nl.forEach(a=>{if(a.getAttribute('href')=='#'+e.target.id)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}),{rootMargin:'-45% 0px -50% 0px'});nl.forEach(a=>{const t=document.querySelector(a.getAttribute('href'));if(t)so.observe(t)})}
-+// card tilt + shine
-+if(!rm)['.mas','.cols','#mosaic'].forEach(s=>{const el=$(s);el.addEventListener('pointermove',e=>{const f=e.target.closest('.pl');if(!f)return;const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;f.style.setProperty('--tx',(x*10)+'deg');f.style.setProperty('--ty',(-y*10)+'deg');f.style.setProperty('--mx',(x*100+50)+'%');f.style.setProperty('--my',(y*100+50)+'%')});el.addEventListener('pointerout',e=>{const f=e.target.closest('.pl');if(f){f.style.setProperty('--tx','0deg');f.style.setProperty('--ty','0deg')}})});
-+// real photographs from the visitor (kept in this tab only)
-+const KEYS=[...Array(7).keys()].map(i=>'cf'+i).concat([...Array(8).keys()].map(i=>'m'+i),[0,1,2,3].map(i=>'d'+i),['story'],[0,1,2,3].map(i=>'t'+i),[...Array(16).keys()].map(i=>'c'+i),[0,1,2,3].map(i=>'f'+i));
-+$('#addph').onclick=()=>$('#phin').click();
-+$('#phin').onchange=async e=>{const fs=[...e.target.files].filter(f=>f.type.startsWith('image/')).slice(0,24);if(!fs.length)return;
-+ const urls=await Promise.all(fs.map(f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f)})));
-+ KEYS.forEach((k,i)=>PHOTOS[k]=urls[i%urls.length]);
-+ let j=0;document.querySelectorAll('.pl').forEach(f=>{if(f.closest('#cprev'))return;const s=f.querySelector('svg');if(!s)return;const im=new Image();im.src=urls[j++%urls.length];im.alt='Your photograph';s.replaceWith(im)});
-+ $('#addph').textContent='Photos added ('+fs.length+')'};
-+// closing: plate maker
-+const NM=['Adire','Zobo','Sun','Leaf','Chalk','Ink'];let mk={t:'p',pi:0,n:0,cap:'My plate'};
-+const cc=$('#cctl'),cp=$('#cprev');
-+cc.innerHTML=`<div class="cr" role="group" aria-label="Discipline">${CT.map(t=>`<button aria-pressed="${t=='p'}" data-t="${t}">${NAME[t]}</button>`).join('')}</div><div class="cr" role="group" aria-label="Palette">${PAL.map((p,i)=>`<button class="sw" aria-pressed="${!i}" data-p="${i}" aria-label="${NM[i]} palette" style="background:linear-gradient(135deg,${p[0]} 50%,${p[1]} 50%)"></button>`).join('')}</div><label class="cl">Name your plate<input id="ccap" maxlength="24" value="My plate"></label><div class="cr"><button class="btn" id="shuf" type="button">Shuffle</button></div>`;
-+function mkDraw(){cp.innerHTML=`<figure class="pl">${art(mk.t,mk.pi,mk.n)}<figcaption></figcaption></figure>`;cp.querySelector('figcaption').textContent=mk.cap}
-+cc.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-+ if(b.id=='shuf'){mk.n=Math.floor(Math.random()*9);mk.pi=Math.floor(Math.random()*6);cc.querySelectorAll('[data-p]').forEach(o=>o.setAttribute('aria-pressed',o.dataset.p==mk.pi))}
-+ else if(b.dataset.t){mk.t=b.dataset.t;cc.querySelectorAll('[data-t]').forEach(o=>o.setAttribute('aria-pressed',o===b))}
-+ else if(b.dataset.p){mk.pi=+b.dataset.p;cc.querySelectorAll('[data-p]').forEach(o=>o.setAttribute('aria-pressed',o===b))}
-+ mkDraw()});
-+$('#ccap').addEventListener('input',e=>{mk.cap=e.target.value||'Untitled';cp.querySelector('figcaption').textContent=mk.cap});
-+if(!rm){cp.addEventListener('pointermove',e=>{const f=cp.firstChild,r=cp.getBoundingClientRect();f.style.transform=`rotateY(${((e.clientX-r.left)/r.width-.5)*18}deg) rotateX(${-((e.clientY-r.top)/r.height-.5)*14}deg)`});cp.addEventListener('pointerleave',()=>cp.firstChild.style.transform='')}
-+mkDraw();
-+
-+// footer
-+$('#mqt').innerHTML=Array(2).fill(['Photography','Music','Fashion','Design','Past','Present'].concat(['Photography','Music','Fashion','Design','Past','Present']).map(w=>`<span>${w}</span>`).join('')).join('');
-+$('#big').innerHTML='ARCHIVE'.split('').map(l=>`<span aria-hidden="true">${l}</span>`).join('');
-+function setFilter(f){filt=f;shown=8;document.querySelectorAll('#fl button').forEach(o=>o.setAttribute('aria-pressed',o.dataset.f==f));draw();$('#collection').scrollIntoView({behavior:rm?'auto':'smooth'})}
-+document.querySelectorAll('.fb').forEach(b=>b.onclick=()=>setFilter(b.dataset.f));
-+function tick(){try{$('#clock').textContent='Lagos time '+new Date().toLocaleTimeString('en-GB',{timeZone:'Africa/Lagos',hour:'2-digit',minute:'2-digit'})+'. Open online.'}catch(e){}}
-+tick();setInterval(tick,30000);
-+
- // nav + reveal
- const mb=$('.menu'),ul=$('#links');
- mb.onclick=()=>{const o=ul.classList.toggle('open');mb.setAttribute('aria-expanded',o)};
--- 
-2.43.0
+[Enter the archive](#disciplines)[Explore the collection](#collection)
 
+## Four ways into the archive
+
+The names listed are real starting points for research, not a complete or ranked list. Plates are original illustrations.
+
+## Hairstyles as portraiture
+
+From 1968, the photographer J. D. 'Okhai Ojeikere documented Nigerian hairstyles, shot from behind and in profile. Hair becomes sculpture, and each portrait records how people chose to present themselves.
+
+It shows how an everyday subject can hold a whole culture's craft.
+
+Demonstration copy. Confirm dates and captions with his estate or a museum source before publishing. No Ojeikere photographs are shown here.
+
+## Through the years
+
+## The collection
+
+Select a plate to read its record. These are demonstration entries that show the metadata each real object will carry.
+
+### Choose a plate
+
+Its title, creator, date, source and rights will appear here.
+
+## Records that still spin
+
+Sleeves are where music met graphic design. Hover to spread the stack.
+
+## History is still being made.
+
+Make a plate of your own. Choose a discipline and a palette, name it, then shuffle until it feels right.
+
+Your plate lives in this browser tab only. Nothing is uploaded or submitted.
+
+### About
+
+A fictional digital museum of Nigerian creative history. It aims to show how past work still shapes the present.
+
+### See in the collection
+
+- 
+- 
+- 
+- 
+
+### Explore
+
+- [Featured story](#story)
+- [Through the years](#years)
+- [Collection](#collection)
+- [Make a plate](#make)
+
+### Open now
+
+Every hour, online.
+
+Type: Bricolage Grotesque, Newsreader (SIL OFL)
+
+[Back to top](#top)
+
+Plates are original illustrations. Historical statements are demonstration copy awaiting source verification. Photographs will appear only once licensed and credited.
